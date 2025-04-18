@@ -1,0 +1,9 @@
+build
+coverage
+
+**/*.html
+
+**/.git
+**/.svn
+**/.hg
+**/node_modules
