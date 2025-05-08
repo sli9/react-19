@@ -1,5 +1,6 @@
 import { Search } from './components/search-input/Search.tsx';
 import { useEffect, useState } from 'react';
+import { MovieCard } from './components/movie-card/MovieCard.tsx';
 
 export type Movie = {
   adult: boolean;
@@ -62,22 +63,17 @@ function App() {
           <h1>
             <span className={'text-gradient'}>Movie</span> App
           </h1>
+          <Search />
         </header>
-        <Search />
-        <section className={'trending'}>
-          <h2>Trending</h2>
+
+        <section className={'all-movies'}>
+          <h2 className={'mt-10 mb-9'}>Popular</h2>
           {errorMessage && (
             <p className="text-center text-red-500">{errorMessage}</p>
           )}
           <ul>
             {movies.map((movie) => (
-              <li key={movie.id}>
-                <img
-                  src={`https://tmdb-proxy-sigma.vercel.app/api/image/t/p/w500${movie.poster_path}`}
-                  alt={movie.title}
-                />
-                <p>{movie.title}</p>
-              </li>
+              <MovieCard movie={movie} key={movie.id} />
             ))}
           </ul>
         </section>
