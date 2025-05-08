@@ -1,16 +1,19 @@
-import { useState } from 'react';
-import searchIcon from '../../../public/search.svg';
+import searchIcon from '/search.svg';
 
-export const Search = () => {
-  const [searchValue, setSearchValue] = useState('');
+type Props = {
+  callback: (value: string) => void;
+  inputValue: string;
+};
+
+export const Search = ({ callback, inputValue }: Props) => {
   return (
     <div className="search">
       <div>
         <img src={searchIcon} alt="Search Icon" />
         <input
           placeholder="Search"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          value={inputValue}
+          onChange={(e) => callback(e.target.value)}
         />
       </div>
     </div>

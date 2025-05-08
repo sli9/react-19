@@ -1,6 +1,6 @@
 import { Movie } from '../../App.tsx';
-import noPoster from '../../../public/no-poster.png';
-import starRating from '../../../public/rating-star.svg';
+import noPoster from '/no-poster.png';
+import starRating from '/rating-star.svg';
 
 type Props = {
   movie: Movie;

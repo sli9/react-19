@@ -1,6 +1,7 @@
 import { Search } from './components/search-input/Search.tsx';
 import { useEffect, useState } from 'react';
 import { MovieCard } from './components/movie-card/MovieCard.tsx';
+import { useDebounce } from 'react-use';
 
 export type Movie = {
   adult: boolean;
@@ -29,11 +30,17 @@ export type MoviesResponse = {
 function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedValue, setDebouncedValue] = useState('');
 
-  const fetchMovies = async () => {
+  useDebounce(() => setDebouncedValue(searchQuery), 500, [searchQuery]);
+
+  const fetchMovies = async (query: string) => {
     try {
       const response = await fetch(
-        `https://tmdb-proxy-sigma.vercel.app/api/discover/movie?sort_by=popularity.desc`
+        searchQuery
+          ? `${import.meta.env.VITE_TMDB_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+          : `${import.meta.env.VITE_TMDB_BASE_URL}/discover/movie?sort_by=popularity.desc`
       );
 
       if (!response.ok) {
@@ -51,8 +58,8 @@ function App() {
   };
 
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    fetchMovies(debouncedValue);
+  }, [debouncedValue]);
 
   return (
     <main>
@@ -63,7 +70,7 @@ function App() {
           <h1>
             <span className={'text-gradient'}>Movie</span> App
           </h1>
-          <Search />
+          <Search callback={setSearchQuery} inputValue={searchQuery} />
         </header>
 
         <section className={'all-movies'}>
