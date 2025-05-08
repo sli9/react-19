@@ -2,6 +2,7 @@ import { Search } from './components/search-input/Search.tsx';
 import { useEffect, useState } from 'react';
 import { MovieCard } from './components/movie-card/MovieCard.tsx';
 import { useDebounce } from 'react-use';
+import { TrendingMovies } from './components/trending-movies/TrendingMovies.tsx';
 
 export type Movie = {
   adult: boolean;
@@ -72,6 +73,8 @@ function App() {
           </h1>
           <Search callback={setSearchQuery} inputValue={searchQuery} />
         </header>
+
+        <TrendingMovies />
 
         <section className={'all-movies'}>
           <h2 className={'mt-10 mb-9'}>Popular</h2>
